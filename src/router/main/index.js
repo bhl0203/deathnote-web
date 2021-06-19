@@ -10,6 +10,8 @@ const Main = () => {
     const [summonerInfo, setSummonerInfo] = useState(test);
     const [reportGood, setReportGood] = useState(1);
     const [reportBad, setReportBad] = useState(1);
+    const [Win, setWin] = useState(2);
+    const [Lose, setLose] = useState(3);
     const [reportType, setReportType] = useState(false);
     const [reportDescription, setReportDescription] = useState('');
     const [reportViewOpen, setReportViewOpen] = useState(false);
@@ -38,15 +40,23 @@ const Main = () => {
                     backgroundColor: ['rgba(0,0,0, 1)', 'rgba(0,0,0,0.1)'],
                     borderColor: ['#ffffff', '#ffffff'],
                     hoverBackgroundColor: ['#FF0100', '#56C1FF'],
+                }, {
+                    data: [Win, Lose],
+
+                    backgroundColor: ['#FF0100', '#56C1FF'],
+                    borderColor: ['#ffffff', '#ffffff'],
+                    hoverBackgroundColor: ['rgba(0,0,0, 1)', 'rgba(0,0,0,0.1)'],
                 },
-            ],
-            labels: ['리폿', '칭찬'],
+            ],        
+            labels: ['리폿', '칭찬','승','패'],
         };
         let options = {
             animation: false,
         };
         return <Doughnut data={data} options={options} className="mainChart" />;
     };
+
+
 
     return (
         <>
@@ -259,38 +269,6 @@ const Main = () => {
                                     }
                                 })}
                         </div>
-
-                        {!isEmpty(reports) ? (
-                            <>
-                                {reportViewOpen ? (
-                                    <div
-                                        className="review-view-close-btn-wrap"
-                                        onClick={() => {
-                                            setReportViewOpen(!reportViewOpen);
-                                        }}
-                                    >
-                                        <span className="review-view-close-btn">
-                                            닫기
-                                        </span>
-                                    </div>
-                                ) : (
-                                    <div
-                                        className="review-view-open-btn-wrap"
-                                        onClick={() => {
-                                            setReportViewOpen(!reportViewOpen);
-                                        }}
-                                    >
-                                        <span className="review-view-open-btn">
-                                            펼치기
-                                        </span>
-                                    </div>
-                                )}
-                            </>
-                        ) : (
-                            <div className="review-none-wrap">
-                                <span>비어있습니다. 작성해주세요!</span>
-                            </div>
-                        )}
                     </div>
                     {!isEmpty(summonerInfo.summonerMatch) &&
                         summonerInfo.summonerMatch.map((data, key) => {
@@ -304,12 +282,12 @@ const Main = () => {
                                         <img
                                             src={`https://ddragon.leagueoflegends.com/cdn/11.4.1/img/champion/${championName}.png`}
                                         />
+                                        <div className="summonerMatchRank">
+                                            {data.matchRank}등
+                                        </div>
                                         <div className="summonerMatchKDA">
                                             {data.matchKills}/{data.matchDeaths}
                                             /{data.matchAssists}
-                                        </div>
-                                        <div className="summonerMatchRank">
-                                            {data.matchRank}등
                                         </div>
                                     </div>
                                 );
@@ -319,12 +297,12 @@ const Main = () => {
                                         <img
                                             src={`https://ddragon.leagueoflegends.com/cdn/11.4.1/img/champion/${championName}.png`}
                                         />
+                                        <div className="summonerMatchRank">
+                                            {data.matchRank}등
+                                        </div>
                                         <div className="summonerMatchKDA">
                                             {data.matchKills}/{data.matchDeaths}
                                             /{data.matchAssists}
-                                        </div>
-                                        <div className="summonerMatchRank">
-                                            {data.matchRank}등
                                         </div>
                                     </div>
                                 );
@@ -371,7 +349,7 @@ const test = {
     matchWin: 238,
     matchLose: 217,
     summonerLevel: 425,
-    summonerIcon: 6,
+    summonerIcon: 4,
     summonerTier: 'GRANDMASTER',
     summonerRank: 'I',
     summonerMatch: [
